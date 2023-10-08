@@ -22,10 +22,10 @@ const bookSchema = new mongoose.Schema({
     ref: "Author",
     required: true,
   },
-  // coverImage: {
-  //   type: Image,
-  //   required: true,
-  // },
+  coverImage: {
+    type: Buffer,
+    required: true,
+  },
 });
 
 export default bookSchema;

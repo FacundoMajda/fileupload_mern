@@ -46,22 +46,30 @@ app.use("/api/books", bookRoutes);
 
 // uploader route
 app.post("/upload", function (req, res) {
-  let sampleFile;
-  let uploadPath;
-
   if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No se han cargado arhivos");
+    const errorMessage = "No se han cargado archivos";
+    console.error(errorMessage);
+    return res.status(400).send(errorMessage);
   }
 
-  // El nombre del campo de entrada ("sampleFile") se utiliza para recuperar el archivo cargado
-  sampleFile = req.files.sampleFile;
-  uploadPath = path.join(import.meta.url, "../library/images", sampleFile.name);
+  const sampleFile = req.files.sampleFile;
+  const uploadPath = path.join(
+    import.meta.url,
+    "../library/images",
+    sampleFile.name
+  );
 
   //  método mv()
   sampleFile.mv(uploadPath, function (err) {
-    if (err) return res.status(500).send(err);
+    if (err) {
+      const errorMessage = `Error al subir archivo: ${err.message}`;
+      console.error(errorMessage);
+      return res.status(500).send(errorMessage);
+    }
 
-    res.send(`Archivo subido! - ${currentDate}`);
+    const successMessage = `Archivo subido: ${sampleFile.name} - ${currentDate}`;
+    console.log(successMessage);
+    res.send(successMessage);
   });
 });
 
