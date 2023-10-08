@@ -8,6 +8,11 @@ import { connectToMongoDB } from "./config/db.js";
 import authorRoutes from "./routes/author.routes.js";
 import bookRoutes from "./routes/book.routes.js";
 
+import {
+  handleValidationError,
+  handleCastError,
+} from "./modules/errorhandler.js";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const currentDate = new Date().toLocaleString();
@@ -15,6 +20,8 @@ const currentDate = new Date().toLocaleString();
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use(handleValidationError);
+app.use(handleCastError);
 
 // static client
 app.use(express.static(path.join(import.meta.url, "../client/build")));
