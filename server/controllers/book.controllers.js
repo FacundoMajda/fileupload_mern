@@ -3,7 +3,7 @@ import Book from "../models/book.model.js";
 // Controlador para obtener todos los libros
 export const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().populate("Author", "firstName");
 
     if (!books || books.length === 0) {
       return res.status(404).json({
@@ -24,7 +24,7 @@ export const getBook = async (req, res) => {
   const { bookID } = req.params;
 
   try {
-    const book = await Book.findById(bookID);
+    const book = await Book.findById(bookID).populate(["Author", "firstName"]);
 
     if (!book) {
       return res.status(404).json({
@@ -42,16 +42,48 @@ export const getBook = async (req, res) => {
 
 // Controlador para crear un nuevo libro
 export const createBook = async (req, res) => {
-  const { title, genre, year, author, coverImage, biographyFile } = req.body;
+  const { title, genre, year, biography, author } = req.body;
+  const { coverImage } = req.files;
+
+  //---------//
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    const errorMessage = "No se han cargado archivos";
+    console.error(errorMessage);
+    return res.status(400).send(errorMessage);
+  }
+
+  const original_filename = image.name.split(".")[0];
+  const format = image.name.split(".")[1];
+  const uploadPath = path.join(
+    import.meta.url,
+    "./library/images" + sampleFile.name
+  );
+  //---------//
 
   try {
+    const file_name = uuidv4() + "." + format;
+
+    //metodo mv
+    coverImage.mv(uploadPath, (err) => {
+      if (err) {
+        const errorMessage = `Error al subir archivo: ${err.message}`;
+        console.error(errorMessage);
+        return res.status(500).send(errorMessage);
+      }
+
+      const successMessage = `Archivo subido: ${sampleFile.name} - ${currentDate}`;
+      console.log(successMessage);
+      res.send(successMessage);
+    });
+
     const newBook = new Book({
       title,
       genre,
       year,
       author,
       biography,
-      coverImage,
+      coverImage: { original_filename, format, file_name },
     });
     const savedBook = await newBook.save();
 

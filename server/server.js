@@ -1,4 +1,3 @@
-//@ts-check
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -54,36 +53,36 @@ app.use(
 );
 
 // api routess
-app.use("/api/authors", authorRoutes);
-app.use("/api/books", bookRoutes);
+app.use("/api", authorRoutes);
+app.use("/api", bookRoutes);
 
-// uploader route
-app.post("/", function (req, res) {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    const errorMessage = "No se han cargado archivos";
-    console.error(errorMessage);
-    return res.status(400).send(errorMessage);
-  }
+// // uploader route
+// app.post("/", function (req, res) {
+//   if (!req.files || Object.keys(req.files).length === 0) {
+//     const errorMessage = "No se han cargado archivos";
+//     console.error(errorMessage);
+//     return res.status(400).send(errorMessage);
+//   }
 
-  const sampleFile = req.files.sampleFile;
-  const uploadPath = path.join(
-    import.meta.url,
-    "./library/images" + sampleFile.name
-  );
+//   const sampleFile = req.files.sampleFile;
+//   const uploadPath = path.join(
+//     import.meta.url,
+//     "./library/images" + sampleFile.name
+//   );
 
-  //  método mv()
-  sampleFile.mv(uploadPath, (err) => {
-    if (err) {
-      const errorMessage = `Error al subir archivo: ${err.message}`;
-      console.error(errorMessage);
-      return res.status(500).send(errorMessage);
-    }
+//   //  método mv()
+//   sampleFile.mv(uploadPath, (err) => {
+//     if (err) {
+//       const errorMessage = `Error al subir archivo: ${err.message}`;
+//       console.error(errorMessage);
+//       return res.status(500).send(errorMessage);
+//     }
 
-    const successMessage = `Archivo subido: ${sampleFile.name} - ${currentDate}`;
-    console.log(successMessage);
-    res.send(successMessage);
-  });
-});
+//     const successMessage = `Archivo subido: ${sampleFile.name} - ${currentDate}`;
+//     console.log(successMessage);
+//     res.send(successMessage);
+//   });
+// });
 
 // 404
 app.use((req, res, next) => {
