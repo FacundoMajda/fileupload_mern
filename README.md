@@ -1,16 +1,25 @@
-# fileupload_mern
+# Biblioteca MERN
+
+## fileupload_mern
 
 ## MongoDB, Express, React y Node.js
 
-Este es un proyecto de ejemplo de una aplicación MERN que te permite cargar archivos y almacenarlos en un servidor.
+Este proyecto es una aplicación de ejemplo que utiliza el stack MERN (MongoDB, Express, React, Node.js) para gestionar una biblioteca de libros y autores. Proporciona una interfaz de usuario donde los usuarios pueden agregar nuevos libros y autores, ver la lista de libros y autores existentes y cargar imágenes de portada para los libros.
 
-## Funcionalidades
+### Requisitos previos
 
-- Subir archivos individuales o múltiples.
-- Validación del tamaño y tipo de archivo.
-- Visualización de archivos cargados.
-- Almacenamiento de archivos en el servidor.
-- Integración con MongoDB para almacenar metadatos de archivos.
+- Node.js y npm instalados en tu sistema.
+- MongoDB instalado y en funcionamiento.
+
+### Uso
+*Navega a la página principal para ver la lista de libros y autores.
+
+*Haz clic en "Agregar Libro" para agregar un nuevo libro.
+
+*Haz clic en "Agregar Autor" para agregar un nuevo autor.
+
+*Haz clic en "Ver Autores" para abrir un slider con la lista de autores.
+
 
 # Instalación
 
@@ -22,6 +31,34 @@ Agrega las variables de entorno necesarias en el archivo .env de tu servidor par
 
 ```bash
 PORT=
-DB_URL=mongodb://url_puerto/
-DB_NAME=tu_base_de_datos
+URL=
+DB_URL=
+DB_PORT=
+DB_NAME=
 ```
+
+?. Instala las dependencias del servidor y del cliente:
+
+```bash
+cd server
+npm install
+cd ../client
+npm install
+```
+
+?. Inicia el servidor
+
+```bash
+cd server
+npm run dev
+```
+
+?. Inicia el cliente
+
+```bash
+cd ../client
+npm run dev
+```
+
+?. Accede a la aplicacion a traves del localhost
+La aplicación estará disponible en http://localhost:{PUERTO}.
