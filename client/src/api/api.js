@@ -1,8 +1,8 @@
 import "dotenv/config";
 import axios from "axios";
 
-const PORT = process.env.PORT;
-const URL = process.env.URL;
+const PORT = "3000";
+const URL = "http://127.0.0.1";
 
 const BACKEND_URL = `${URL}:${PORT}`;
 

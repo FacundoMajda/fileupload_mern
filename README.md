@@ -12,14 +12,14 @@ Este proyecto es una aplicación de ejemplo que utiliza el stack MERN (MongoDB, 
 - MongoDB instalado y en funcionamiento.
 
 ### Uso
-*Navega a la página principal para ver la lista de libros y autores.
 
-*Haz clic en "Agregar Libro" para agregar un nuevo libro.
+\*Navega a la página principal para ver la lista de libros y autores.
 
-*Haz clic en "Agregar Autor" para agregar un nuevo autor.
+\*Haz clic en "Agregar Libro" para agregar un nuevo libro.
 
-*Haz clic en "Ver Autores" para abrir un slider con la lista de autores.
+\*Haz clic en "Agregar Autor" para agregar un nuevo autor.
 
+\*Haz clic en "Ver Autores" para abrir un slider con la lista de autores.
 
 # Instalación
 
@@ -37,28 +37,41 @@ DB_PORT=
 DB_NAME=
 ```
 
-?. Instala las dependencias del servidor y del cliente:
+1. Clona este repositorio en tu escritorio y muevete a la carpeta contenedora
+
+```bash
+cd desktop
+git clone https://GitHub.com/FacundoMajda/fileupload_mern
+cd fileupload_mern
+```
+
+2. Instala las dependencias del servidor y del cliente:
+   -Recomendado usar pnpm
 
 ```bash
 cd server
-npm install
+pnpm install
 cd ../client
-npm install
+pnpm install
 ```
 
-?. Inicia el servidor
+3. Inicia el servidor
 
 ```bash
 cd server
 npm run dev
 ```
 
-?. Inicia el cliente
+4. Inicia el cliente
 
 ```bash
 cd ../client
 npm run dev
 ```
 
-?. Accede a la aplicacion a traves del localhost
-La aplicación estará disponible en http://localhost:{PUERTO}.
+5. Accede a la aplicacion a traves del localhost
+   La aplicación estará disponible en
+
+```bash
+ http://localhost:{PUERTO}.
+```
