@@ -5,23 +5,35 @@ import morgan from "morgan";
 import fileUpload from "express-fileupload";
 import path from "path";
 import { connectToMongoDB } from "./config/db.js";
+import helmet from "helmet";
+
+//routes
 import authorRoutes from "./routes/author.routes.js";
 import bookRoutes from "./routes/book.routes.js";
 
+//module error handler
 import {
   handleValidationError,
   handleCastError,
 } from "./modules/errorhandler.js";
+import { contentSecurityPolicy } from "helmet";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const currentDate = new Date().toLocaleString();
 
+//middlewares
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({ contentSecurityPolicy: false }));
 app.use(morgan("dev"));
 app.use(handleValidationError);
 app.use(handleCastError);
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // static client
 app.use(express.static(path.join(import.meta.url, "../client/build")));
@@ -45,7 +57,7 @@ app.use("/api/authors", authorRoutes);
 app.use("/api/books", bookRoutes);
 
 // uploader route
-app.post("/upload", function (req, res) {
+app.post("/", function (req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
     const errorMessage = "No se han cargado archivos";
     console.error(errorMessage);
@@ -55,12 +67,11 @@ app.post("/upload", function (req, res) {
   const sampleFile = req.files.sampleFile;
   const uploadPath = path.join(
     import.meta.url,
-    "../library/images",
-    sampleFile.name
+    "./library/images" + sampleFile.name
   );
 
   //  método mv()
-  sampleFile.mv(uploadPath, function (err) {
+  sampleFile.mv(uploadPath, (err) => {
     if (err) {
       const errorMessage = `Error al subir archivo: ${err.message}`;
       console.error(errorMessage);
@@ -87,9 +98,13 @@ app.use((err, req, res, next) => {
 });
 
 // Ruta para la vista principal de la aplicación React
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(import.meta.url, "../client/build/index.html"));
 });
+
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(import.meta.url, "../client/build/index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log(

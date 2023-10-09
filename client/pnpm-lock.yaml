@@ -8,6 +8,9 @@ dependencies:
   axios:
     specifier: ^1.5.1
     version: 1.5.1
+  dotenv:
+    specifier: ^16.3.1
+    version: 16.3.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -52,6 +55,9 @@ devDependencies:
   vite:
     specifier: ^4.4.5
     version: 4.4.11
+  vite-plugin-react:
+    specifier: ^4.0.1
+    version: 4.0.1(vite@4.4.11)
 
 packages:
 
@@ -226,6 +232,15 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.23.0
+    dev: true
+
+  /@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.23.0):
+    resolution: {integrity: sha512-Yqfm+XDx0+Prh3VSeEQCPU81yC+JWZ2pDPFSS4ZdpfZhp4MkFMaDC1UqseovEKwSUpnIL7+vK+Clp7bfh0iD7g==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.0
+      '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
   /@babel/plugin-transform-react-jsx-self@7.22.5(@babel/core@7.23.0):
@@ -958,6 +973,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv@16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /electron-to-chromium@1.4.544:
     resolution: {integrity: sha512-54z7squS1FyFRSUqq/knOFSptjjogLZXbKcYk3B0qkE1KZzvqASwRZnY2KzZQJqIYLVD38XZeoiMRflYSwyO4w==}
@@ -1964,6 +1984,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /react-refresh@0.8.3:
+    resolution: {integrity: sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
   /react-router-dom@6.16.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-aTfBLv3mk/gaKLxgRDUPbPw+s4Y/O+ma3rEN1u8EgEpLpPe6gNjIsWt9rxushMHHMb7mSwxRGdGlGdvmFsyPIg==}
     engines: {node: '>=14.0.0'}
@@ -2317,6 +2342,19 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.3.0
+    dev: true
+
+  /vite-plugin-react@4.0.1(vite@4.4.11):
+    resolution: {integrity: sha512-liDo/wxTcy2E5cptwsAUZIC0F4flxWkmcPOJdhKCzJIC9XguWCCJimzziTQRmHuqIPawmQNE8PJb8+RlGzNxOA==}
+    peerDependencies:
+      vite: '>=1.0.0-rc.13'
+    dependencies:
+      '@babel/core': 7.23.0
+      '@babel/plugin-syntax-import-meta': 7.10.4(@babel/core@7.23.0)
+      react-refresh: 0.8.3
+      vite: 4.4.11
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /vite@4.4.11:

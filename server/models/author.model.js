@@ -1,6 +1,20 @@
 import mongoose from "mongoose";
-import authorSchema from "./schemas/author.schema.js"; // Importa el esquema del autor
 
-const Author = mongoose.model("Author", authorSchema);
+const authorSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  biography: {
+    type: String,
+    required: true,
+  },
+});
 
-export default Author;
+export default authorSchema;

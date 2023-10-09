@@ -1,10 +1,22 @@
-// api.js
+import "dotenv/config";
 import axios from "axios";
 
-// genérica para crear una entidad
+const PORT = process.env.PORT;
+const URL = process.env.URL;
+
+const BACKEND_URL = `${URL}:${PORT}`;
+
+const api = axios.create({
+  baseURL: `${BACKEND_URL}/api`,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
+// Función genérica para crear una entidad
 export const createEntity = async (entityType, formData) => {
   try {
-    const response = await axios.post(`/api/${entityType}`, formData, {
+    const response = await api.post(`/${entityType}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -20,10 +32,15 @@ export const createEntity = async (entityType, formData) => {
     throw error;
   }
 };
-// genérica para obtener una lista de entidades
+
+// Función genérica para obtener una lista de entidades
 export const getEntities = async (entityType) => {
   try {
-    const response = await axios.get(`/api/${entityType}`);
+    const response = await api.get(`/${entityType}`, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
