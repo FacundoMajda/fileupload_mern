@@ -1,39 +1,9 @@
-import React, { useState } from "react";
-import FileUploader from "../uploader/uploader";
+
+import React from "react";
+import useEntityForm from "../hooks/useEntityForm";
 
 const BookForm = () => {
-  const [title, setTitle] = useState("");
-  const [genre, setGenre] = useState("");
-  const [year, setYear] = useState("");
-  const [author, setAuthor] = useState("");
-  const [coverImage, setCoverImage] = useState(null);
-  const [biographyFile, setBiographyFile] = useState(null);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("genre", genre);
-    formData.append("year", year);
-    formData.append("author", author);
-    formData.append("coverImage", coverImage);
-    formData.append("biographyFile", biographyFile);
-
-    try {
-      const response = await fetch("/api/books", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.status === 200) {
-        console.log("Libro agregado con éxito");
-      } else {
-        console.error("Error al agregar libro");
-      }
-    } catch (error) {
-      console.error("Error de red", error);
-    }
-  };
+  const { formData, handleInputChange, handleSubmit } = useEntityForm("book");
 
   return (
     <>
@@ -41,37 +11,31 @@ const BookForm = () => {
         <h2>Agregar Libro</h2>
         <input
           type="text"
+          name="title"
           placeholder="Título"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData.title}
+          onChange={handleInputChange}
         />
         <input
           type="text"
+          name="genre"
           placeholder="Género"
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
+          value={formData.genre}
+          onChange={handleInputChange}
         />
         <input
           type="number"
+          name="year"
           placeholder="Año"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
+          value={formData.year}
+          onChange={handleInputChange}
         />
         <input
           type="text"
+          name="author"
           placeholder="ID del Autor"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-
-        <FileUploader
-          accept="image/*"
-          onFileSelected={(file) => setCoverImage(file)}
-        />
-
-        <FileUploader
-          accept=".txt"
-          onFileSelected={(file) => setBiographyFile(file)}
+          value={formData.author}
+          onChange={handleInputChange}
         />
         <button type="submit">Agregar Libro</button>
       </form>

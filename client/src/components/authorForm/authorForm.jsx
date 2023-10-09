@@ -1,32 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import useEntityForm from "../hooks/useEntityForm";
 
 const AuthorForm = () => {
-  const [name, setName] = useState("");
-  const [biography, setBiography] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("/api/authors", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, biography }),
-      });
-
-      if (response.ok) {
-        console.log("Autor agregado con éxito");
-        setName("");
-        setBiography("");
-      } else {
-        console.error("Error al agregar el autor");
-      }
-    } catch (error) {
-      console.error("Error de red", error);
-    }
-  };
+  const { formData, handleInputChange, handleSubmit } = useEntityForm("author");
 
   return (
     <>
@@ -34,15 +10,23 @@ const AuthorForm = () => {
         <h2>Agregar Autor</h2>
         <input
           type="text"
-          placeholder="Nombre del autor"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="firstName"
+          placeholder="Nombre"
+          value={formData.firstName}
+          onChange={handleInputChange}
         />
         <input
           type="text"
+          name="lastName"
+          placeholder="Apellido"
+          value={formData.lastName}
+          onChange={handleInputChange}
+        />
+        <textarea
+          name="biography"
           placeholder="Biografía"
-          value={biography}
-          onChange={(e) => setBiography(e.target.value)}
+          value={formData.biography}
+          onChange={handleInputChange}
         />
         <button type="submit">Agregar Autor</button>
       </form>
