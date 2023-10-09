@@ -1,3 +1,4 @@
+//@ts-check
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -25,7 +26,7 @@ const currentDate = new Date().toLocaleString();
 //middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ contentSecurityPolicy: false }));
+app.use(cors());
 app.use(morgan("dev"));
 app.use(handleValidationError);
 app.use(handleCastError);
