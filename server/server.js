@@ -6,38 +6,39 @@ import fileUpload from "express-fileupload";
 import path from "path";
 import { connectToMongoDB } from "./config/db.js";
 import helmet from "helmet";
-
 //routes
 import authorRoutes from "./routes/author.routes.js";
 import bookRoutes from "./routes/book.routes.js";
+
+import { logger } from "./middlewares/logger.js";
+//test
+logger.info("Este es un mensaje de información.");
+logger.error("Este es un mensaje de error.");
 
 //module error handler
 import {
   handleValidationError,
   handleCastError,
-} from "./modules/errorhandler.js";
-import { contentSecurityPolicy } from "helmet";
-
+  errorHandler,
+} from "./middlewares/errorsHandler.js"
+//====================================//
 const app = express();
 const PORT = process.env.PORT || 3000;
 const currentDate = new Date().toLocaleString();
+
+// static client
+app.use(express.static(path.join(import.meta.url, "../client/build")));
 
 //middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
-app.use(handleValidationError);
-app.use(handleCastError);
 app.use(
   helmet({
     contentSecurityPolicy: false,
   })
 );
-
-// static client
-app.use(express.static(path.join(import.meta.url, "../client/build")));
-
 //config perrona
 app.use(
   fileUpload({
@@ -87,27 +88,22 @@ app.use("/api", bookRoutes);
 // 404
 app.use((req, res, next) => {
   const errorMessage = "Página no encontrada";
-  console.error(errorMessage);
+  logger.error(errorMessage);
   res.status(404).send(errorMessage);
 });
 
-// 500
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send(`Error del servidor: ${err.message}`);
-});
+//middlewares personalizados
+app.use(handleValidationError);
+app.use(handleCastError);
+app.use(errorHandler);
 
 // Ruta para la vista principal de la aplicación React
 app.get("*", (req, res) => {
   res.sendFile(path.join(import.meta.url, "../client/build/index.html"));
 });
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(import.meta.url, "../client/build/index.html"));
-// });
-
 app.listen(PORT, () => {
-  console.log(
+  logger.info(
     `Servidor en ejecución en http://localhost:${PORT} - ${currentDate}`
   );
   connectToMongoDB();
